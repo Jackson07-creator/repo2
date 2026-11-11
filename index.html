@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Jackson J — B.Sc. Artificial Intelligence and Machine Learning student. Curious mind. Building what's next." />
+  <title>Jackson J — AI & Machine Learning Student</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       TOKENS & RESET
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ivory:     #F5F1E8;
+      --ivory-dark:#EDE8DB;
+      --green:     #173D32;
+      --green-mid: #2A6150;
+      --sage:      #D9E1D5;
+      --sage-dark: #BFD0C3;
+      --text:      #1A1A1A;
+      --muted:     #6B6B5F;
+      --border:    rgba(23,61,50,0.15);
+
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+
+      --nav-h: 70px;
+      --max-w: 1140px;
+      --pad-x: clamp(24px, 5vw, 100px);
+      --section-gap: clamp(80px, 12vw, 160px);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background: var(--ivory);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =============================================
+       SCROLLBAR
+    ============================================= */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--ivory); }
+    ::-webkit-scrollbar-thumb { background: var(--sage-dark); border-radius: 99px; }
+
+    /* =============================================
+       UTILITY
+    ============================================= */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+    }
+
+    .section-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+      opacity: 0.5;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(245,241,232,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+
+    #navbar.scrolled {
+      border-bottom-color: var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--green);
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s;
+    }
+
+    .nav-logo:hover { opacity: 0.7; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--green);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+      outline: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--green);
+      border-radius: 99px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: var(--nav-h);
+      background: var(--ivory);
+      z-index: 99;
+      padding: 40px var(--pad-x);
+      flex-direction: column;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover { color: var(--green); }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 80px;
+      align-items: center;
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(64px, 9vw, 110px);
+      font-weight: 400;
+      line-height: 0.95;
+      color: var(--green);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .hero-description {
+      font-size: 15px;
+      color: var(--green-mid);
+      line-height: 1.8;
+      max-width: 420px;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 32px;
+      border: 1.5px solid var(--green);
+      color: var(--green);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      border-radius: 999px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--green);
+      color: var(--ivory);
+    }
+
+    /* Portrait arch */
+    .hero-portrait {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .arch-frame {
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 3/4;
+      background: var(--sage);
+      border-radius: 999px 999px 20px 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 24px;
+      overflow: hidden;
+      transition: transform 0.4s ease;
+    }
+
+    .arch-frame:hover { transform: scale(1.015); }
+
+    .arch-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      color: var(--green);
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    /* =============================================
+       ABOUT
+    ============================================= */
+    #about {
+      padding: var(--section-gap) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-heading {
+      font-family: var(--serif);
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      grid-column: 2;
+      margin-bottom: 48px;
+    }
+
+    .about-label-col {
+      grid-row: 1 / 3;
+      padding-top: 8px;
+    }
+
+    .about-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      grid-column: 2;
+    }
+
+    .about-cols p {
+      font-size: 15px;
+      color: var(--green-mid);
+      line-height: 1.85;
+    }
+
+    /* =============================================
+       EDUCATION
+    ============================================= */
+    #education {
+      padding: var(--section-gap) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .edu-inner {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 60px;
+    }
+
+    .edu-entries {
+      grid-column: 2;
+    }
+
+    .edu-entry {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .edu-entry:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .edu-degree {
+      font-family: var(--serif);
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .edu-institution {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .edu-year {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .edu-status {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 6px;
+    }
+
+    /* =============================================
+       SKILLS
+    ============================================= */
+    #skills {
+      padding: var(--section-gap) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .skills-inner {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 60px;
+    }
+
+    .skills-grid {
+      grid-column: 2;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+
+    .skill-category {
+      padding: 36px 0;
+      border-bottom: 1px solid var(--border);
+      padding-right: 60px;
+    }
+
+    .skill-category:nth-child(even) {
+      padding-left: 60px;
+      padding-right: 0;
+      border-left: 1px solid var(--border);
+    }
+
+    .skill-category-name {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tag {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text);
+      position: relative;
+      cursor: default;
+      transition: color 0.2s;
+    }
+
+    .skill-tag:not(:last-child)::after {
+      content: ' —';
+      color: var(--border);
+    }
+
+    .skill-tag:hover { color: var(--green); }
+
+    /* =============================================
+       CERTIFICATES
+    ============================================= */
+    #certificates {
+      padding: var(--section-gap) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .certs-inner {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 60px;
+    }
+
+    .certs-heading {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 400;
+      color: var(--text);
+      grid-column: 2;
+      margin-bottom: 48px;
+      line-height: 1.1;
+    }
+
+    .certs-label-col { grid-row: 1 / 3; }
+
+    .certs-grid {
+      grid-column: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .cert-card {
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cert-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(23,61,50,0.08);
+    }
+
+    .cert-img-wrap {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--sage);
+      position: relative;
+    }
+
+    .cert-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .cert-card:hover .cert-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    /* Placeholder for missing image */
+    .cert-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--green);
+      font-family: var(--sans);
+    }
+
+    .cert-placeholder-icon {
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid var(--green);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.5;
+    }
+
+    .cert-placeholder-icon svg { width: 20px; height: 20px; }
+
+    .cert-info {
+      padding: 20px;
+    }
+
+    .cert-name {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .cert-provider {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* =============================================
+       CONTACT
+    ============================================= */
+    #contact {
+      padding: var(--section-gap) 0;
+      border-top: 1px solid var(--border);
+      padding-bottom: calc(var(--section-gap) * 1.5);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 60px;
+    }
+
+    .contact-heading {
+      font-family: var(--serif);
+      font-size: clamp(44px, 7vw, 88px);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      grid-column: 2;
+      margin-bottom: 60px;
+    }
+
+    .contact-label-col { grid-row: 1 / 3; }
+
+    .contact-links {
+      grid-column: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .contact-link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.25s ease;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .contact-link-item:first-child { border-top: 1px solid var(--border); }
+
+    .contact-link-item:hover {
+      padding-left: 8px;
+      color: var(--green);
+    }
+
+    .contact-link-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-width: 80px;
+    }
+
+    .contact-link-value {
+      font-family: var(--serif);
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 400;
+      flex: 1;
+      padding: 0 24px;
+    }
+
+    .contact-link-arrow {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, border-color 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .contact-link-item:hover .contact-link-arrow {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .contact-link-arrow svg {
+      width: 14px;
+      height: 14px;
+      transition: stroke 0.25s ease;
+    }
+
+    .contact-link-item:hover .contact-link-arrow svg { stroke: var(--ivory); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px var(--pad-x);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 100%;
+    }
+
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* Back-to-top */
+    .back-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+      border: none;
+      outline: none;
+      z-index: 50;
+    }
+
+    .back-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-top svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--ivory);
+    }
+
+    /* =============================================
+       ANIMATIONS
+    ============================================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+    /* Stagger for cert cards */
+    .cert-card.fade-up:nth-child(1) { transition-delay: 0.0s; }
+    .cert-card.fade-up:nth-child(2) { transition-delay: 0.08s; }
+    .cert-card.fade-up:nth-child(3) { transition-delay: 0.16s; }
+    .cert-card.fade-up:nth-child(4) { transition-delay: 0.24s; }
+    .cert-card.fade-up:nth-child(5) { transition-delay: 0.32s; }
+
+    /* =============================================
+       RESPONSIVE — TABLET (≤860px)
+    ============================================= */
+    @media (max-width: 860px) {
+      :root { --pad-x: 36px; }
+
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding-top: 40px;
+      }
+
+      .hero-portrait { order: -1; }
+
+      .arch-frame {
+        max-width: 220px;
+        margin: 0 auto;
+      }
+
+      .about-inner,
+      .edu-inner,
+      .skills-inner,
+      .certs-inner,
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .about-label-col,
+      .edu-inner > .section-label,
+      .skills-inner > .section-label,
+      .certs-inner > .section-label,
+      .contact-inner > .section-label {
+        grid-row: unset;
+      }
+
+      .about-heading,
+      .certs-heading,
+      .contact-heading,
+      .edu-entries,
+      .skills-grid,
+      .certs-grid,
+      .contact-links {
+        grid-column: 1;
+      }
+
+      .about-cols { grid-template-columns: 1fr; gap: 24px; }
+      .certs-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .skill-category:nth-child(even) { padding-left: 32px; }
+      .skill-category { padding-right: 32px; }
+
+      .contact-heading { font-size: clamp(40px, 8vw, 72px); }
+    }
+
+    /* =============================================
+       RESPONSIVE — MOBILE (≤560px)
+    ============================================= */
+    @media (max-width: 560px) {
+      :root { --pad-x: 20px; }
+
+      .hero-name { font-size: clamp(52px, 14vw, 80px); }
+
+      .certs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skill-category:nth-child(even) {
+        border-left: none;
+        padding-left: 0;
+      }
+
+      .contact-link-value { font-size: 15px; padding: 0 12px; }
+      .contact-heading { font-size: clamp(36px, 11vw, 60px); }
+
+      .back-top { bottom: 20px; right: 20px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">Jackson J.</a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certificates">Certificates</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <a href="#about"        class="mobile-nav-link">About</a>
+    <a href="#education"    class="mobile-nav-link">Education</a>
+    <a href="#skills"       class="mobile-nav-link">Skills</a>
+    <a href="#certificates" class="mobile-nav-link">Certificates</a>
+    <a href="#contact"      class="mobile-nav-link">Contact</a>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero" aria-label="Hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Left -->
+        <div class="hero-content">
+          <p class="hero-eyebrow fade-up">Student &bull; AI &amp; Machine Learning</p>
+          <h1 class="hero-name fade-up">Jackson J</h1>
+          <p class="hero-headline fade-up">Curious mind. Building what's next.</p>
+          <p class="hero-description fade-up">I'm an undergraduate exploring artificial intelligence and machine learning — learning how data, code and good questions come together to build useful things.</p>
+          <a href="#contact" class="btn-primary fade-up">Contact Me</a>
+        </div>
+
+        <!-- Right: Portrait -->
+        <div class="hero-portrait fade-up">
+          <div class="arch-frame">
+            <span class="arch-label">Portrait</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section id="about" aria-label="About">
+    <div class="container">
+      <div class="about-inner">
+
+        <div class="about-label-col fade-up">
+          <span class="section-label">01 — About</span>
+        </div>
+
+        <h2 class="about-heading fade-up">Learning out loud,<br>one model at a time.</h2>
+
+        <div class="about-cols">
+          <p class="fade-up">I've always been the kind of person who wants to know how things work. That curiosity led me from tinkering with computers to studying Artificial Intelligence and Machine Learning, where every week brings a new idea to understand.</p>
+          <p class="fade-up">Right now I'm focused on building strong foundations — Python, data, and the mathematics behind models — while picking up web development along the way. I learn best by making things, breaking them, and making them better.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EDUCATION
+  ============================================================ -->
+  <section id="education" aria-label="Education">
+    <div class="container">
+      <div class="edu-inner">
+
+        <div class="fade-up">
+          <span class="section-label">02 — Education</span>
+        </div>
+
+        <div class="edu-entries">
+
+          <div class="edu-entry fade-up">
+            <div>
+              <p class="edu-degree">B.Sc. Artificial Intelligence and Machine Learning</p>
+              <p class="edu-institution">KPR College of Arts Science and Research</p>
+              <p class="edu-year">Expected Graduation: 2028</p>
+            </div>
+            <span class="edu-status">Currently Pursuing</span>
+          </div>
+
+          <div class="edu-entry fade-up">
+            <div>
+              <p class="edu-degree">Higher Secondary Schooling</p>
+              <p class="edu-institution">Infant Jesus Matriculation Higher Secondary School</p>
+            </div>
+            <span class="edu-status">Completed</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SKILLS
+  ============================================================ -->
+  <section id="skills" aria-label="Skills">
+    <div class="container">
+      <div class="skills-inner">
+
+        <div class="fade-up">
+          <span class="section-label">03 — Skills</span>
+        </div>
+
+        <div class="skills-grid">
+
+          <div class="skill-category fade-up">
+            <p class="skill-category-name">Programming</p>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">C++</span>
+            </div>
+          </div>
+
+          <div class="skill-category fade-up">
+            <p class="skill-category-name">Web Development</p>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML</span>
+              <span class="skill-tag">CSS</span>
+              <span class="skill-tag">Angular</span>
+            </div>
+          </div>
+
+          <div class="skill-category fade-up">
+            <p class="skill-category-name">AI &amp; Machine Learning</p>
+            <div class="skill-tags">
+              <span class="skill-tag">Python Programming</span>
+              <span class="skill-tag">Machine Learning Basics</span>
+              <span class="skill-tag">Design &amp; Analysis of Algorithms</span>
+            </div>
+          </div>
+
+          <div class="skill-category fade-up">
+            <p class="skill-category-name">Tools</p>
+            <div class="skill-tags">
+              <span class="skill-tag">VS Code</span>
+              <span class="skill-tag">Google Colab</span>
+              <span class="skill-tag">GitHub</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CERTIFICATES
+  ============================================================ -->
+  <section id="certificates" aria-label="Certificates">
+    <div class="container">
+      <div class="certs-inner">
+
+        <div class="certs-label-col fade-up">
+          <span class="section-label">04 — Certificates</span>
+        </div>
+
+        <h2 class="certs-heading fade-up">Credentials &amp;<br>Certifications.</h2>
+
+        <div class="certs-grid">
+
+          <!-- 1: Angular -->
+          <div class="cert-card fade-up">
+            <div class="cert-img-wrap">
+              <img src="assets/jackson_c5.png" alt="Angular certificate from Infosys Springboard" loading="lazy" />
+            </div>
+            <div class="cert-info">
+              <p class="cert-name">Angular</p>
+              <p class="cert-provider">Infosys Springboard</p>
+              <a href="c5.html">click here</a>
+            </div>
+          </div>
+
+          <!-- 2: Python for Data Science -->
+          <div class="cert-card fade-up">
+            <div class="cert-img-wrap">
+              <img src="assets/jackcon_c4.png" alt="Python for Data Science certificate from NPTEL" loading="lazy" />
+            </div>
+            <div class="cert-info">
+              <p class="cert-name">Python for Data Science</p>
+              <p class="cert-provider">NPTEL</p>
+               <a href="c4.html">click here</a>
+            </div>
+          </div>
+
+          <!-- 3: Strategic Planning -->
+           <div class="cert-card fade-up">
+            <div class="cert-img-wrap">
+              <img src="assets/Jackson_c1.png" alt="Strategic Planning in the AI Age certificate from HP LIFE" loading="lazy" />
+            </div>
+            <div class="cert-info">
+              <p class="cert-name">Strategic Planning in the AI Age</p>
+              <p class="cert-provider">HP LIFE</p>
+              <a href="c1.html">click here</a>
+            </div>
+          </div>
+
+          <!-- 4: AI for Business -->
+          <div class="cert-card fade-up">
+            <div class="cert-img-wrap">
+              <img src="assets/jackson_c2.png" alt="AI for Business Professionals certificate from HP LIFE" loading="lazy" />
+            </div>
+            <div class="cert-info">
+              <p class="cert-name">AI for Business Professionals</p>
+              <p class="cert-provider">HP LIFE</p>
+              <a href="c2.html">click here</a>
+            </div>
+          </div>
+
+          <!-- 5: Data Science & Analytics (placeholder SVG) -->
+          <div class="cert-card fade-up">
+            <div class="cert-img-wrap">
+              <img src="assets/jackson_c3.png" alt="AI for Business Professionals certificate from HP LIFE" loading="lazy" />
+            </div>
+            <div class="cert-info">
+              <p class="cert-name">Data Science &amp; Analytics</p>
+              <p class="cert-provider">HP LIFE</p>
+              <a href="c3.html">click here</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section id="contact" aria-label="Contact">
+    <div class="container">
+      <div class="contact-inner">
+
+        <div class="contact-label-col fade-up">
+          <span class="section-label">05 — Contact</span>
+        </div>
+
+        <h2 class="contact-heading fade-up">Let's<br>connect.</h2>
+
+        <div class="contact-links">
+
+          <a href="mailto:Jackson.25bscaiml@kprcas.ac.in" class="contact-link-item fade-up" id="contact-email">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">Jackson.25bscaiml@kprcas.ac.in</span>
+            <div class="contact-link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </div>
+          </a>
+
+          <a href="https://github.com/Jackson07-creator" target="_blank" rel="noopener noreferrer" class="contact-link-item fade-up" id="contact-github">
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-value">Jackson07-creator</span>
+            <div class="contact-link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/jackson-j-4ba998382" target="_blank" rel="noopener noreferrer" class="contact-link-item fade-up" id="contact-linkedin">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">jackson-j-4ba998382</span>
+            <div class="contact-link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <span class="footer-name">Jackson J.</span>
+    <span class="footer-copy">&copy; 2024 &mdash; B.Sc. AI &amp; Machine Learning</span>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-top" id="backTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // ----- Navbar scroll state -----
+    const navbar  = document.getElementById('navbar');
+    const backTop = document.getElementById('backTop');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+      backTop.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+
+    backTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ----- Hamburger menu -----
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function closeMobileMenu() {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      mobileMenu.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close on nav link click
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+
+    // ----- Intersection Observer: fade-up -----
+    const fadeEls = document.querySelectorAll('.fade-up');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Hero elements visible immediately
+    document.querySelectorAll('#hero .fade-up').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 100 + i * 120);
+    });
+  </script>
+
+</body>
+</html>
